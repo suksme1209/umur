@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 
 body{
 background:#0f172a;
-font-family:Arial;
+font-family:Arial, sans-serif;
 margin:0;
 color:white;
 }
@@ -25,50 +26,76 @@ letter-spacing:2px;
 .container{
 display:flex;
 justify-content:center;
-margin-top:40px;
+margin-top:50px;
 }
 
 .card{
 background:#1e293b;
-padding:30px;
-border-radius:10px;
-width:420px;
+padding:35px;
+border-radius:12px;
+width:440px;
 box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
 label{
 display:block;
-margin-top:15px;
+margin-top:18px;
 font-size:14px;
+letter-spacing:0.5px;
 }
 
-input,select,button{
+/* INPUT DAN SELECT DISAMAKAN */
+
+input,select{
 width:100%;
-padding:10px;
-margin-top:5px;
-border-radius:6px;
+height:42px;
+padding:0 12px;
+margin-top:6px;
+border-radius:8px;
 border:none;
 font-size:14px;
+font-family:Arial, sans-serif;
+box-sizing:border-box;
+background:#e5e7eb;
+color:#111827;
 }
 
+/* KHUSUS DATE AGAR SAMA */
+
+input[type="date"]{
+appearance:none;
+-webkit-appearance:none;
+}
+
+/* BUTTON */
+
 button{
+width:100%;
+height:44px;
 background:#22c55e;
 color:white;
 font-weight:bold;
 cursor:pointer;
-margin-top:20px;
+margin-top:25px;
+border-radius:8px;
+border:none;
+font-size:15px;
+transition:0.2s;
 }
 
 button:hover{
 background:#16a34a;
 }
 
+/* HASIL */
+
 .result{
-margin-top:20px;
+margin-top:25px;
 background:#020617;
-padding:15px;
-border-radius:6px;
+padding:18px;
+border-radius:8px;
 font-size:16px;
+min-height:40px;
 }
 
 .statusMS{
@@ -223,7 +250,6 @@ bulan+=12;
 
 let umur=tahun+(bulan/12)+(hari/365);
 
-
 /* BATAS UMUR */
 
 let min=0;
@@ -260,13 +286,9 @@ max=21;
 let status="";
 
 if(umur>=min && umur<=max){
-
 status="<span class='statusMS'>MEMENUHI SYARAT (MS)</span>";
-
 }else{
-
 status="<span class='statusTMS'>TIDAK MEMENUHI SYARAT (TMS)</span>";
-
 }
 
 document.getElementById("hasil").innerHTML=
@@ -280,3 +302,4 @@ document.getElementById("hasil").innerHTML=
 
 </body>
 </html>
+```
