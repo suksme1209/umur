@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>CEK UMUR BY PAK KAJI</title>
+
+<style>
+
+body{
+background:#0f172a;
+font-family:Arial;
+margin:0;
+color:white;
+}
+
+.header{
+background:#1e293b;
+padding:20px;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+.container{
+display:flex;
+justify-content:center;
+margin-top:40px;
+}
+
+.card{
+background:#1e293b;
+padding:30px;
+border-radius:10px;
+width:420px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+label{
+display:block;
+margin-top:15px;
+font-size:14px;
+}
+
+input,select,button{
+width:100%;
+padding:10px;
+margin-top:5px;
+border-radius:6px;
+border:none;
+font-size:14px;
+}
+
+button{
+background:#22c55e;
+color:white;
+font-weight:bold;
+cursor:pointer;
+margin-top:20px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.result{
+margin-top:20px;
+background:#020617;
+padding:15px;
+border-radius:6px;
+font-size:16px;
+}
+
+.statusMS{
+color:#22c55e;
+font-weight:bold;
+}
+
+.statusTMS{
+color:#ef4444;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+CEK UMUR BY PAK KAJI
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<label>JALUR</label>
+
+<select id="jalur" onchange="updatePendidikan()">
+<option value="">PILIH JALUR</option>
+<option value="AKPOL">AKPOL</option>
+<option value="BINTARA">BINTARA</option>
+<option value="TAMTAMA">TAMTAMA</option>
+</select>
+
+
+<label>PENDIDIKAN TERAKHIR</label>
+
+<select id="pendidikan">
+<option value="">PILIH PENDIDIKAN</option>
+</select>
+
+
+<label>TANGGAL LAHIR</label>
+
+<input type="date" id="lahir">
+
+
+<button onclick="hitung()">CEK UMUR</button>
+
+
+<div class="result" id="hasil">
+
+</div>
+
+
+</div>
+</div>
+
+
+
+<script>
+
+function updatePendidikan(){
+
+let jalur=document.getElementById("jalur").value;
+let pendidikan=document.getElementById("pendidikan");
+
+pendidikan.innerHTML="<option value=''>PILIH PENDIDIKAN</option>";
+
+let data={
+
+AKPOL:["SMA","MA"],
+
+BINTARA:[
+"SMA",
+"SMK",
+"MA",
+"MAK",
+"PDF",
+"PONDOK PESANTREN",
+"SPM",
+"D-I",
+"D-II",
+"D-III",
+"D4",
+"S1"
+],
+
+TAMTAMA:[
+"SMA",
+"SMK",
+"MA",
+"MAK",
+"PDF",
+"PONDOK PESANTREN",
+"SPM"
+]
+
+};
+
+if(data[jalur]){
+
+data[jalur].forEach(function(p){
+
+let opt=document.createElement("option");
+
+opt.value=p;
+opt.text=p;
+
+pendidikan.appendChild(opt);
+
+});
+
+}
+
+}
+
+
+
+function hitung(){
+
+let lahir=new Date(document.getElementById("lahir").value);
+let sekarang=new Date();
+
+let jalur=document.getElementById("jalur").value;
+let pendidikan=document.getElementById("pendidikan").value;
+
+let tahun=sekarang.getFullYear()-lahir.getFullYear();
+let bulan=sekarang.getMonth()-lahir.getMonth();
+let hari=sekarang.getDate()-lahir.getDate();
+
+if(hari<0){
+bulan--;
+hari+=30;
+}
+
+if(bulan<0){
+tahun--;
+bulan+=12;
+}
+
+let umur=tahun+(bulan/12);
+
+let batas=0;
+
+if(jalur=="AKPOL"){
+batas=21;
+}
+
+if(jalur=="TAMTAMA"){
+batas=22;
+}
+
+if(jalur=="BINTARA"){
+
+if(["D-I","D-II","D-III"].includes(pendidikan)){
+batas=24;
+}
+
+else if(["D4","S1"].includes(pendidikan)){
+batas=27;
+}
+
+else{
+batas=21;
+}
+
+}
+
+let status="";
+
+if(umur<=batas){
+
+status="<span class='statusMS'>MEMENUHI SYARAT (MS)</span>";
+
+}else{
+
+status="<span class='statusTMS'>TIDAK MEMENUHI SYARAT (TMS)</span>";
+
+}
+
+document.getElementById("hasil").innerHTML=
+
+"UMUR : "+tahun+" TAHUN "+bulan+" BULAN "+hari+" HARI <br><br>" +
+
+"STATUS : "+status;
+
+}
+
+</script>
+
+</body>
+</html>
