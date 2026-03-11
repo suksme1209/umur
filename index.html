@@ -60,7 +60,7 @@ background:#e5e7eb;
 color:#111827;
 }
 
-/* KHUSUS DATE AGAR SAMA */
+/* DATE STYLE */
 
 input[type="date"]{
 appearance:none;
@@ -96,6 +96,7 @@ padding:18px;
 border-radius:8px;
 font-size:16px;
 min-height:40px;
+text-align:center;
 }
 
 .statusMS{
@@ -105,6 +106,11 @@ font-weight:bold;
 
 .statusTMS{
 color:#ef4444;
+font-weight:bold;
+}
+
+.warning{
+color:#facc15;
 font-weight:bold;
 }
 
@@ -148,6 +154,8 @@ CEK UMUR BY PAK KAJI
 </div>
 
 <script>
+
+/* UPDATE PENDIDIKAN */
 
 function updatePendidikan(){
 
@@ -206,18 +214,26 @@ pendidikan.appendChild(opt);
 
 
 
+/* HITUNG UMUR */
+
 function hitung(){
 
+let jalur=document.getElementById("jalur").value;
+let pendidikan=document.getElementById("pendidikan").value;
 let lahirInput=document.getElementById("lahir").value;
 
-if(lahirInput==""){
-alert("Tanggal lahir belum diisi");
+/* VALIDASI INPUT */
+
+if(jalur=="" || pendidikan=="" || lahirInput==""){
+
+document.getElementById("hasil").innerHTML=
+"<span class='warning'>LENGKAPI PENGISIAN DATA !</span>";
+
 return;
+
 }
 
 let lahir=new Date(lahirInput);
-let jalur=document.getElementById("jalur").value;
-let pendidikan=document.getElementById("pendidikan").value;
 
 /* TANGGAL BUKA DIK */
 
@@ -250,6 +266,7 @@ bulan+=12;
 
 let umur=tahun+(bulan/12)+(hari/365);
 
+
 /* BATAS UMUR */
 
 let min=0;
@@ -281,15 +298,21 @@ max=21;
 
 }
 
+
 /* STATUS */
 
 let status="";
 
 if(umur>=min && umur<=max){
+
 status="<span class='statusMS'>MEMENUHI SYARAT (MS)</span>";
+
 }else{
+
 status="<span class='statusTMS'>TIDAK MEMENUHI SYARAT (TMS)</span>";
+
 }
+
 
 document.getElementById("hasil").innerHTML=
 
