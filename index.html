@@ -44,8 +44,6 @@ font-size:14px;
 letter-spacing:0.5px;
 }
 
-/* INPUT DAN SELECT DISAMAKAN */
-
 input,select{
 width:100%;
 height:42px;
@@ -60,14 +58,10 @@ background:#e5e7eb;
 color:#111827;
 }
 
-/* DATE STYLE */
-
 input[type="date"]{
 appearance:none;
 -webkit-appearance:none;
 }
-
-/* BUTTON */
 
 button{
 width:100%;
@@ -86,8 +80,6 @@ transition:0.2s;
 button:hover{
 background:#16a34a;
 }
-
-/* HASIL */
 
 .result{
 margin-top:25px;
@@ -155,6 +147,20 @@ CEK UMUR BY PAK KAJI
 
 <script>
 
+/* FORMAT TANGGAL DD/MM/YYYY */
+
+function formatTanggal(tgl){
+
+let d = new Date(tgl);
+
+let hari = String(d.getDate()).padStart(2,'0');
+let bulan = String(d.getMonth()+1).padStart(2,'0');
+let tahun = d.getFullYear();
+
+return hari+"/"+bulan+"/"+tahun;
+
+}
+
 /* UPDATE PENDIDIKAN */
 
 function updatePendidikan(){
@@ -212,8 +218,6 @@ pendidikan.appendChild(opt);
 
 }
 
-
-
 /* HITUNG UMUR */
 
 function hitung(){
@@ -221,8 +225,6 @@ function hitung(){
 let jalur=document.getElementById("jalur").value;
 let pendidikan=document.getElementById("pendidikan").value;
 let lahirInput=document.getElementById("lahir").value;
-
-/* VALIDASI INPUT */
 
 if(jalur=="" || pendidikan=="" || lahirInput==""){
 
@@ -234,6 +236,7 @@ return;
 }
 
 let lahir=new Date(lahirInput);
+let lahirFormat=formatTanggal(lahirInput);
 
 /* TANGGAL BUKA DIK */
 
@@ -262,10 +265,7 @@ tahun--;
 bulan+=12;
 }
 
-/* UMUR DESIMAL */
-
 let umur=tahun+(bulan/12)+(hari/365);
-
 
 /* BATAS UMUR */
 
@@ -298,7 +298,6 @@ max=21;
 
 }
 
-
 /* STATUS */
 
 let status="";
@@ -313,9 +312,9 @@ status="<span class='statusTMS'>TIDAK MEMENUHI SYARAT (TMS)</span>";
 
 }
 
-
 document.getElementById("hasil").innerHTML=
 
+"TANGGAL LAHIR : "+lahirFormat+"<br><br>"+
 "UMUR : "+tahun+" TAHUN "+bulan+" BULAN "+hari+" HARI <br><br>" +
 "STATUS : "+status;
 
