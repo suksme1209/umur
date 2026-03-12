@@ -1,6 +1,5 @@
-```html
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <title>CEK UMUR BY PAK KAJI</title>
@@ -9,7 +8,7 @@
 
 body{
 background:#0f172a;
-font-family:Arial, sans-serif;
+font-family:Arial;
 margin:0;
 color:white;
 }
@@ -41,7 +40,6 @@ label{
 display:block;
 margin-top:18px;
 font-size:14px;
-letter-spacing:0.5px;
 }
 
 input,select{
@@ -52,15 +50,8 @@ margin-top:6px;
 border-radius:8px;
 border:none;
 font-size:14px;
-font-family:Arial, sans-serif;
-box-sizing:border-box;
 background:#e5e7eb;
 color:#111827;
-}
-
-input[type="date"]{
-appearance:none;
--webkit-appearance:none;
 }
 
 button{
@@ -74,7 +65,6 @@ margin-top:25px;
 border-radius:8px;
 border:none;
 font-size:15px;
-transition:0.2s;
 }
 
 button:hover{
@@ -87,7 +77,6 @@ background:#020617;
 padding:18px;
 border-radius:8px;
 font-size:16px;
-min-height:40px;
 text-align:center;
 }
 
@@ -116,7 +105,6 @@ CEK UMUR BY PAK KAJI
 </div>
 
 <div class="container">
-
 <div class="card">
 
 <label>JALUR</label>
@@ -147,176 +135,179 @@ CEK UMUR BY PAK KAJI
 
 <script>
 
-/* FORMAT TANGGAL DD/MM/YYYY */
+/* FORMAT TANGGAL */
 
-function formatTanggal(tgl){
+function formatTanggal(t){
 
-let d = new Date(tgl);
+let d=new Date(t)
 
-let hari = String(d.getDate()).padStart(2,'0');
-let bulan = String(d.getMonth()+1).padStart(2,'0');
-let tahun = d.getFullYear();
+let hari=String(d.getDate()).padStart(2,'0')
+let bulan=String(d.getMonth()+1).padStart(2,'0')
+let tahun=d.getFullYear()
 
-return hari+"/"+bulan+"/"+tahun;
+return hari+"/"+bulan+"/"+tahun
 
 }
+
 
 /* UPDATE PENDIDIKAN */
 
 function updatePendidikan(){
 
-let jalur=document.getElementById("jalur").value;
-let pendidikan=document.getElementById("pendidikan");
+let jalur=document.getElementById("jalur").value
+let pendidikan=document.getElementById("pendidikan")
 
-pendidikan.innerHTML="<option value=''>PILIH PENDIDIKAN</option>";
+pendidikan.innerHTML="<option value=''>PILIH PENDIDIKAN</option>"
 
 let data={
 
 AKPOL:["SMA","MA"],
 
 BINTARA:[
-"SMA",
-"SMK",
-"MA",
-"MAK",
-"PDF",
-"PONDOK PESANTREN",
-"SPM",
-"D-I",
-"D-II",
-"D-III",
-"D4",
-"S1"
+"SMA","SMK","MA","MAK","PDF",
+"PONDOK PESANTREN","SPM",
+"D-I","D-II","D-III","D4","S1"
 ],
 
 TAMTAMA:[
-"SMA",
-"SMK",
-"MA",
-"MAK",
-"PDF",
-"PONDOK PESANTREN",
-"SPM"
+"SMA","SMK","MA","MAK",
+"PDF","PONDOK PESANTREN","SPM"
 ]
 
-};
+}
 
 if(data[jalur]){
 
 data[jalur].forEach(function(p){
 
-let opt=document.createElement("option");
+let opt=document.createElement("option")
+opt.value=p
+opt.text=p
 
-opt.value=p;
-opt.text=p;
+pendidikan.appendChild(opt)
 
-pendidikan.appendChild(opt);
+})
 
-});
+}
 
 }
 
-}
 
 /* HITUNG UMUR */
 
 function hitung(){
 
-let jalur=document.getElementById("jalur").value;
-let pendidikan=document.getElementById("pendidikan").value;
-let lahirInput=document.getElementById("lahir").value;
+let jalur=document.getElementById("jalur").value
+let pendidikan=document.getElementById("pendidikan").value
+let lahirInput=document.getElementById("lahir").value
 
 if(jalur=="" || pendidikan=="" || lahirInput==""){
 
 document.getElementById("hasil").innerHTML=
-"<span class='warning'>LENGKAPI PENGISIAN DATA !</span>";
+"<span class='warning'>LENGKAPI DATA !</span>"
 
-return;
+return
 
 }
 
-let lahir=new Date(lahirInput);
-let lahirFormat=formatTanggal(lahirInput);
+let lahir=new Date(lahirInput)
+let lahirFormat=formatTanggal(lahirInput)
+
 
 /* TANGGAL BUKA DIK */
 
-let bukaDik;
+let bukaDik
 
 if(jalur=="AKPOL"){
-bukaDik=new Date("2026-08-01");
+bukaDik=new Date("2026-08-01")
 }else{
-bukaDik=new Date("2026-07-20");
+bukaDik=new Date("2026-07-20")
 }
+
 
 /* HITUNG UMUR */
 
-let tahun=bukaDik.getFullYear()-lahir.getFullYear();
-let bulan=bukaDik.getMonth()-lahir.getMonth();
-let hari=bukaDik.getDate()-lahir.getDate();
+let tahun=bukaDik.getFullYear()-lahir.getFullYear()
+let bulan=bukaDik.getMonth()-lahir.getMonth()
+let hari=bukaDik.getDate()-lahir.getDate()
 
 if(hari<0){
-bulan--;
-let lastMonth=new Date(bukaDik.getFullYear(),bukaDik.getMonth(),0);
-hari+=lastMonth.getDate();
+bulan--
+let lastMonth=new Date(bukaDik.getFullYear(),bukaDik.getMonth(),0)
+hari+=lastMonth.getDate()
 }
 
 if(bulan<0){
-tahun--;
-bulan+=12;
+tahun--
+bulan+=12
 }
 
-let umur=tahun+(bulan/12)+(hari/365);
 
-/* BATAS UMUR */
+/* BATAS LAHIR */
 
-let min=0;
-let max=0;
+let minLahir
+let maxLahir
+
 
 if(jalur=="AKPOL"){
-min=16;
-max=21;
+
+minLahir=new Date("2005-08-01")
+maxLahir=new Date("2010-08-01")
+
 }
 
 if(jalur=="TAMTAMA"){
-min=17+(7/12);
-max=22;
+
+maxLahir=new Date("2004-07-20")
+minLahir=new Date("2008-12-20")
+
 }
 
 if(jalur=="BINTARA"){
 
-min=17+(7/12);
+minLahir=new Date("2008-12-20")
 
 if(["D-I","D-II","D-III"].includes(pendidikan)){
-max=24;
+
+maxLahir=new Date("2002-07-20")
+
 }
 else if(["D4","S1"].includes(pendidikan)){
-max=27;
+
+maxLahir=new Date("1999-07-20")
+
 }
 else{
-max=21;
+
+maxLahir=new Date("2004-07-20")
+
 }
 
 }
+
 
 /* STATUS */
 
-let status="";
+let status
 
-if(umur>=min && umur<=max){
+if(lahir>=maxLahir && lahir<=minLahir){
 
-status="<span class='statusMS'>MEMENUHI SYARAT (MS)</span>";
+status="<span class='statusMS'>MEMENUHI SYARAT (MS)</span>"
 
 }else{
 
-status="<span class='statusTMS'>TIDAK MEMENUHI SYARAT (TMS)</span>";
+status="<span class='statusTMS'>TIDAK MEMENUHI SYARAT (TMS)</span>"
 
 }
+
+
+/* OUTPUT */
 
 document.getElementById("hasil").innerHTML=
 
 "TANGGAL LAHIR : "+lahirFormat+"<br><br>"+
-"UMUR : "+tahun+" TAHUN "+bulan+" BULAN "+hari+" HARI <br><br>" +
-"STATUS : "+status;
+"UMUR : "+tahun+" TAHUN "+bulan+" BULAN "+hari+" HARI<br><br>"+
+"STATUS : "+status
 
 }
 
@@ -324,4 +315,3 @@ document.getElementById("hasil").innerHTML=
 
 </body>
 </html>
-```
